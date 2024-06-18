@@ -2,8 +2,16 @@ const result = document.querySelector("ul");
 const buttonShow = document.querySelector(".show-all");
 const buttomMap = document.querySelector(".map-each");
 const sumAll = document.querySelector(".sum-all");
-const filterAll = document.querySelector(".filter-all")
+const filterAll = document.querySelector(".filter-all");
 
+function formatCurrency(value) {
+  const newValue = value.toLocaleString("pt-br", {
+    style: "currency",
+    currency: "BRL",
+  });
+
+  return newValue;
+}
 function mostrarTela(productsArray) {
   let myLi = "";
   productsArray.forEach((item) => {
@@ -11,7 +19,7 @@ function mostrarTela(productsArray) {
                <li>
                      <img src=${item.src}>
                      <p>${item.name}</p>
-                     <p class="item-prace">R$ ${item.price}</p>
+                     <p class="item-prace">R$ ${formatCurrency(item.price)}</p>
               </li>
           
           `;
@@ -38,7 +46,7 @@ function sumAllItems() {
 
   result.innerHTML = `
        <li>
-          <p>A soma de  todos<br> os itens do <br> manu é: R$ ${totalValue}</p>
+          <p>A soma de  todos<br> os itens do <br> manu é: R$ ${formatCurrency(totalValue)}</p>
        </li>
           
  
@@ -47,11 +55,13 @@ function sumAllItems() {
   console.log(totalValue);
 }
 
-function filterAllItems(){
-     
+function filterAllItems() {
+  const filterJustVegan = menuOptions.filter((product) => product.vegan);
+
+  mostrarTela(filterJustVegan);
 }
 
 buttonShow.addEventListener("click", () => mostrarTela(menuOptions));
 buttomMap.addEventListener("click", mapEach);
 sumAll.addEventListener("click", sumAllItems);
-filterAll.addEventListener("click", filterAllItems)
+filterAll.addEventListener("click", filterAllItems);
